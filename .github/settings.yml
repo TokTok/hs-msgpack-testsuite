@@ -1,0 +1,17 @@
+---
+_extends: .github
+
+repository:
+  name: hs-msgpack-testsuite
+  description: Haskell implementation of MessagePack / msgpack.org
+  homepage: http://msgpack.org/
+  topics: msgpack, haskell
+  has_issues: true
+
+branches:
+  - name: "master"
+    protection:
+      required_status_checks:
+        contexts:
+          - "bazel-opt"
+          - "build / stack"
