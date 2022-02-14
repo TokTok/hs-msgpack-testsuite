@@ -23,6 +23,7 @@ haskell_library(
         hazel_library("hashable"),
         hazel_library("hspec"),
         hazel_library("monad-validate"),
+        hazel_library("quickcheck-instances"),
         hazel_library("text"),
         hazel_library("unordered-containers"),
         hazel_library("vector"),
