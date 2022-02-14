@@ -1,5 +1,5 @@
 name:                 msgpack-testsuite
-version:              0.0.15
+version:              0.0.16
 synopsis:             A Haskell implementation of MessagePack
 homepage:             http://msgpack.org/
 license:              BSD3
@@ -40,7 +40,8 @@ library
     , hashable
     , hspec
     , monad-validate
-    , msgpack-types             >= 0.2 && < 0.3
+    , msgpack-arbitrary
+    , msgpack-types             >= 0.3 && < 0.4
     , text
     , unordered-containers
     , vector
