@@ -8,12 +8,13 @@ module Test.MessagePack.Spec where
 import           Test.Hspec
 import           Test.QuickCheck
 import qualified Test.QuickCheck.Gen         as Gen
+import           Test.QuickCheck.Instances   ()
 
 import qualified Data.ByteString.Char8       as S
 import qualified Data.ByteString.Lazy        as L8
 import qualified Data.ByteString.Lazy.Char8  as L
-import qualified Data.HashMap.Strict         as HashMap
 import           Data.Hashable               (Hashable)
+import qualified Data.HashMap.Strict         as HashMap
 import           Data.Int                    (Int16, Int32, Int64, Int8)
 import qualified Data.IntMap                 as IntMap
 import qualified Data.Map                    as Map
@@ -79,29 +80,6 @@ instance Arbitrary Foo where
     , Foo8 <$> arbitrary <*> arbitrary
     , Foo9 <$> arbitrary <*> arbitrary <*> arbitrary
     ]
-
-
-instance (Hashable k, Ord k, Eq k, Arbitrary k, Arbitrary v)
-    => Arbitrary (HashMap.HashMap k v) where
-  arbitrary = HashMap.fromList . Map.assocs <$> arbitrary
-
-instance Arbitrary a => Arbitrary (V.Vector a) where
-  arbitrary = V.fromList <$> arbitrary
-
-instance (Arbitrary a, VS.Storable a) => Arbitrary (VS.Vector a) where
-  arbitrary = VS.fromList <$> arbitrary
-
-instance (Arbitrary a, VU.Unbox a) => Arbitrary (VU.Vector a) where
-  arbitrary = VU.fromList <$> arbitrary
-
-instance Arbitrary S.ByteString where
-  arbitrary = S.pack <$> arbitrary
-
-instance Arbitrary L.ByteString where
-  arbitrary = L.pack <$> arbitrary
-
-instance Arbitrary LT.Text where
-  arbitrary = LT.pack <$> arbitrary
 
 
 type UnpackResult a = Either DecodeError a
