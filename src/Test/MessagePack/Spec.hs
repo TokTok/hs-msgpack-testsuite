@@ -18,6 +18,7 @@ import           Data.Int                    (Int16, Int32, Int64, Int8)
 import qualified Data.IntMap                 as IntMap
 import qualified Data.Map                    as Map
 import qualified Data.Maybe                  as Maybe
+import           Data.MessagePack.Arbitrary  ()
 import qualified Data.Text.Lazy              as LT
 import qualified Data.Vector                 as V
 import qualified Data.Vector.Storable        as VS
@@ -134,8 +135,8 @@ spec p = do
     it "should contain the same start of the failure message for all types" $ do
       checkMessage (unpackEither (pack $ ObjectInt (-1)) :: UnpackResult Foo)
       checkMessage (unpackEither (pack [ObjectInt (-1), ObjectInt 0]) :: UnpackResult Foo)
-      checkMessage (unpackEither (pack $ ObjectArray []) :: UnpackResult TyConArgs)
-      checkMessage (unpackEither (pack $ ObjectArray []) :: UnpackResult Record)
+      checkMessage (unpackEither (pack $ ObjectArray V.empty) :: UnpackResult TyConArgs)
+      checkMessage (unpackEither (pack $ ObjectArray V.empty) :: UnpackResult Record)
       checkMessage (unpackEither (pack [0 :: Int, 1, 2, 3]) :: UnpackResult Record)
       checkMessage (unpackEither (pack "") :: UnpackResult Unit)
       checkMessage (unpackEither (pack "") :: UnpackResult TyConArgs)
