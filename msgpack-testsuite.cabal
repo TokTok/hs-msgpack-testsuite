@@ -41,7 +41,8 @@ library
     , containers
     , hashable
     , hspec
-    , msgpack-types             >= 0.2.2 && < 0.3
+    , monad-validate
+    , msgpack-types             >= 0.2 && < 0.3
     , text
     , unordered-containers
     , vector
