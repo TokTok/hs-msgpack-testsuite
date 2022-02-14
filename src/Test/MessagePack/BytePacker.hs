@@ -5,15 +5,9 @@ module Test.MessagePack.BytePacker
     , unpackEither, unpack
     ) where
 
-import           Control.Monad.Validate             (Validate, runValidate)
-import qualified Data.ByteString.Lazy               as LBS
-import           Data.MessagePack.Types.Assoc       (Assoc (..))
-import           Data.MessagePack.Types.Class       (Config, MessagePack (..),
-                                                     defaultConfig)
-import           Data.MessagePack.Types.DecodeError (DecodeError, decodeError,
-                                                     errorMessages)
-import           Data.MessagePack.Types.Generic     ()
-import           Data.MessagePack.Types.Object      (Object (..))
+import           Control.Monad.Validate (Validate, runValidate)
+import qualified Data.ByteString.Lazy   as LBS
+import           Data.MessagePack.Types (DecodeError, MessagePack (..))
 
 
 class BytePacker p where

@@ -10,7 +10,6 @@ project(license = "hs-msgpack")
 haskell_library(
     name = "hs-msgpack-testsuite",
     srcs = glob(["src/**/*.*hs"]),
-    compiler_flags = ["-Wno-unused-imports"],
     src_strip_prefix = "src",
     version = "0.0.15",
     visibility = ["//visibility:public"],
@@ -32,7 +31,6 @@ haskell_library(
 hspec_test(
     name = "testsuite",
     size = "small",
-    compiler_flags = ["-Wno-unused-imports"],
     deps = [
         ":hs-msgpack-testsuite",
         hazel_library("base"),

@@ -9,12 +9,11 @@ import           Test.Hspec
 import           Test.QuickCheck
 import qualified Test.QuickCheck.Gen         as Gen
 
-import           Control.Applicative         ((<$>), (<*>))
 import qualified Data.ByteString.Char8       as S
 import qualified Data.ByteString.Lazy        as L8
 import qualified Data.ByteString.Lazy.Char8  as L
-import qualified Data.HashMap.Strict         as HashMap
 import           Data.Hashable               (Hashable)
+import qualified Data.HashMap.Strict         as HashMap
 import           Data.Int                    (Int16, Int32, Int64, Int8)
 import qualified Data.IntMap                 as IntMap
 import qualified Data.Map                    as Map
@@ -23,8 +22,7 @@ import qualified Data.Text.Lazy              as LT
 import qualified Data.Vector                 as V
 import qualified Data.Vector.Storable        as VS
 import qualified Data.Vector.Unboxed         as VU
-import           Data.Word                   (Word, Word16, Word32, Word64,
-                                              Word8)
+import           Data.Word                   (Word16, Word32, Word64, Word8)
 import           GHC.Generics                (Generic)
 
 import           Data.MessagePack.Types
