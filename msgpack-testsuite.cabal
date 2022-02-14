@@ -30,10 +30,8 @@ library
       -Wall
       -fno-warn-unused-imports
   exposed-modules:
-      Data.MessagePack
-  other-modules:
-      Data.MessagePack.Get
-      Data.MessagePack.Put
+      Test.MessagePack.BytePacker
+      Test.MessagePack.Spec
   build-depends:
       base                      < 5
     , QuickCheck
@@ -53,7 +51,7 @@ test-suite testsuite
   hs-source-dirs: test
   main-is: testsuite.hs
   other-modules:
-      Data.MessagePackSpec
+      Test/MessagePack/SpecSpec
   ghc-options:
       -Wall
       -fno-warn-unused-imports
