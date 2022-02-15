@@ -1,5 +1,5 @@
 name:                 msgpack-testsuite
-version:              0.0.16
+version:              0.1.0
 synopsis:             A Haskell implementation of MessagePack
 homepage:             http://msgpack.org/
 license:              BSD3
