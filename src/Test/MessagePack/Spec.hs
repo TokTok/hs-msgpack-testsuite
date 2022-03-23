@@ -11,8 +11,8 @@ import qualified Test.QuickCheck.Gen         as Gen
 import           Test.QuickCheck.Instances   ()
 
 import qualified Data.ByteString.Char8       as S
-import qualified Data.ByteString.Lazy        as L8
-import qualified Data.ByteString.Lazy.Char8  as L
+import qualified Data.ByteString.Lazy        as L
+import qualified Data.ByteString.Lazy.Char8  as L8
 import qualified Data.HashMap.Strict         as HashMap
 import           Data.Int                    (Int16, Int32, Int64, Int8)
 import qualified Data.IntMap                 as IntMap
@@ -92,12 +92,26 @@ checkMessage (Left msgs) =
 
 spec :: BytePacker p => p -> Spec
 spec p = do
-  describe "unpack" $
+  describe "unpack" $ do
     it "does not throw exceptions on arbitrary data" $
       property $ \bs ->
         case unpack bs of
           Just "" -> return () :: IO ()
           _       -> return () :: IO ()
+
+    it "does not allocate huge vectors up front" $ do
+      -- Creates the beginning of a deeply nested array of 4 billion arrays containing again 4
+      -- billion arrays containing 4 billion arrays, etc. 100 levels deep. This test ensures that
+      -- the array construction is done lazily and we don't actually allocate 400GB of memory.
+      let maxArray = [0xdd,0xff,0xff,0xff,0xff]
+      (unpackEither (L.pack . concat $ maxArray : replicate 100 maxArray) :: UnpackResult [[Int]])
+          `shouldSatisfy` isLeft
+      (unpackEither (L.pack $ [0xdf,0xdf,0xdf,0xdf,0xdf,0xdf]) :: UnpackResult [[Int]])
+          `shouldSatisfy` isLeft
+
+  describe "pack" $
+    it "handles very large arrays (32 bit array length)" $
+      (take 13 $ L.unpack $ pack ([1,2,3,4,5,6] ++ replicate 90000 7 :: [Int])) `shouldBe` [0xdd,0x00,0x01,0x5f,0x96,1,2,3,4,5,6,7,7]
 
   describe "Assoc" $ do
     it "supports read/show" $
@@ -246,7 +260,7 @@ spec p = do
     it "bytestring" $
       property $ \(a :: S.ByteString) -> a `shouldBe` mid a
     it "lazy-bytestring" $
-      property $ \(a :: L.ByteString) -> a `shouldBe` mid a
+      property $ \(a :: L8.ByteString) -> a `shouldBe` mid a
     it "lazy-text" $
       property $ \(a :: LT.Text) -> a `shouldBe` mid a
     it "[int]" $
@@ -295,7 +309,7 @@ spec p = do
 
   describe "encoding validation" $ do
     it "word64 2^64-1" $
-      pack (0xffffffffffffffff :: Word64) `shouldBe` L8.pack [0xCF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
+      pack (0xffffffffffffffff :: Word64) `shouldBe` L.pack [0xCF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
 
     it "decodes empty array as ()" $
       unpack (pack ([] :: [Int])) `shouldBe` Just ()
@@ -307,13 +321,16 @@ spec p = do
     intMid :: Int64 -> Int64
     intMid = mid
 
-    unpackEither :: MessagePack a => L.ByteString -> Either DecodeError a
+    unpackEither :: MessagePack a => L8.ByteString -> Either DecodeError a
     unpackEither = BytePacker.unpackEither p
 
-    pack :: MessagePack a => a -> L.ByteString
+    isLeft Left{}  = True
+    isLeft Right{} = False
+
+    pack :: MessagePack a => a -> L8.ByteString
     pack = BytePacker.pack p
 
-    unpack :: (MonadFail m, MessagePack a) => L.ByteString -> m a
+    unpack :: (MonadFail m, MessagePack a) => L8.ByteString -> m a
     unpack = BytePacker.unpack p
 
     coerce :: (MessagePack a, MessagePack b) => a -> Maybe b
