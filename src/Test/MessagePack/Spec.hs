@@ -27,8 +27,8 @@ import           Data.Word                   (Word16, Word32, Word64, Word8)
 import           GHC.Generics                (Generic)
 
 import           Data.MessagePack.Types
-import           Test.MessagePack.BytePacker (BytePacker)
 import qualified Test.MessagePack.BytePacker as BytePacker
+import           Test.MessagePack.BytePacker (BytePacker)
 
 
 data Unit = Unit

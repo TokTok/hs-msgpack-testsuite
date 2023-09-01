@@ -11,7 +11,7 @@ haskell_library(
     name = "hs-msgpack-testsuite",
     srcs = glob(["src/**/*.*hs"]),
     src_strip_prefix = "src",
-    version = "0.1.0",
+    version = "0.1.1",
     visibility = ["//visibility:public"],
     deps = [
         "//hs-msgpack-arbitrary",

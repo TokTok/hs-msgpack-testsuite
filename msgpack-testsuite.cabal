@@ -1,5 +1,5 @@
 name:                 msgpack-testsuite
-version:              0.1.0
+version:              0.1.1
 synopsis:             A Haskell implementation of MessagePack
 homepage:             http://msgpack.org/
 license:              BSD3
@@ -28,7 +28,7 @@ library
       src
   ghc-options:
       -Wall
-      -fno-warn-unused-imports
+      -Wno-unused-imports
   exposed-modules:
       Test.MessagePack.BytePacker
       Test.MessagePack.Spec
@@ -56,7 +56,8 @@ test-suite testsuite
       Test.MessagePack.SpecSpec
   ghc-options:
       -Wall
-      -fno-warn-unused-imports
+      -Wno-unused-imports
+  build-tool-depends: hspec-discover:hspec-discover
   build-depends:
       base < 5
     , hspec
