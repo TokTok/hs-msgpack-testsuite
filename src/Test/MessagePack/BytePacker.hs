@@ -1,5 +1,4 @@
-{-# LANGUAGE CPP         #-}
-{-# LANGUAGE Trustworthy #-}
+{-# LANGUAGE CPP #-}
 module Test.MessagePack.BytePacker
     ( BytePacker (..)
     , unpackEither, unpack
