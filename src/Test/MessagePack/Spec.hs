@@ -1,8 +1,7 @@
-{-# OPTIONS_GHC -fno-warn-orphans #-}
+{-# OPTIONS_GHC -Wno-orphans #-}
 {-# LANGUAGE DeriveGeneric       #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE StrictData          #-}
-{-# LANGUAGE Trustworthy         #-}
 module Test.MessagePack.Spec where
 
 import           Test.Hspec
